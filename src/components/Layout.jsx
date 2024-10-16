@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import Navigation from '../Navigation/Navigation';
+import Navigation from './Navigation';
 import { Box, Heading, Text, Divider } from '@chakra-ui/react';
+import UserMenu from './UserMenu ';
 
 function Layout() {
   return (
@@ -9,6 +10,7 @@ function Layout() {
         Phonbook
       </Heading>
       <Navigation />
+      <UserMenu />
       <Box as="main" my={6}>
         <Outlet />
       </Box>

@@ -5,7 +5,8 @@ import NotFound from 'pages/NotFound';
 import Register from 'pages/Register';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Layout from './Layout/Layout';
+import Layout from './Layout';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   return (
@@ -15,7 +16,10 @@ function App() {
           <Route index element={<Home />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
-          <Route path="contacts" element={<Contacts />} />
+          <Route
+            path="contacts"
+            element={<PrivateRoute component={<Contacts />} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

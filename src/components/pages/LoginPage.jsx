@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
-import { Box, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Text,
+} from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthError, selectIsLoading } from '../redux/auth/authSelectors';
+import { loginUser } from 'components/redux/auth/authOperations';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+  const error = useSelector(selectAuthError);
+  const isLoading = useSelector(selectIsLoading);
+
   const handleSubmit = e => {
     e.preventDefault();
-    console.log({ email, password });
+    const userData = { email, password };
+    dispatch(loginUser(userData));
   };
   return (
     <div>
@@ -18,7 +33,7 @@ const LoginPage = () => {
             <Input
               type="email"
               placeholder="Enter your email"
-              value="email"
+              value={email}
               onChange={e => setEmail(e.target.value)}
               required
             />
@@ -26,14 +41,20 @@ const LoginPage = () => {
           <FormControl id="password" mb="4">
             <FormLabel>Password:</FormLabel>
             <Input
-              type="password"
-              placeholder="Enter your email"
+              type={password}
+              placeholder="Enter your password"
               value="password"
               onChange={e => setPassword(e.target.value)}
               required
             />
           </FormControl>
-          <Button type="submit" colorScheme="blue" width="full">
+          {error && <Text color="red.500">{error}</Text>}
+          <Button
+            type="submit"
+            colorScheme="blue"
+            width="full"
+            isLoading={isLoading}
+          >
             Login
           </Button>
         </form>

@@ -1,8 +1,29 @@
-import { Box, FormControl, Button, Input, FormLabel } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  Box,
+  FormControl,
+  Button,
+  Input,
+  FormLabel,
+  Text,
+} from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../redux/auth/authOperations';
+import { selectAuthError, selectIsLoading } from '../redux/auth/authSelectors';
 
 const RegisterPage = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+  const error = useSelector(selectAuthError);
+  const isLoading = useSelector(selectIsLoading);
+
   const handleSubmit = e => {
     e.preventDefault();
+    const userData = { name, email, password };
+    dispatch(registerUser(userData));
   };
   return (
     <>
@@ -12,9 +33,9 @@ const RegisterPage = () => {
             <FormLabel>Name</FormLabel>
             <Input
               type="name"
-              value="Name"
-              //onChange={e => setName(e.target.value)}
-              placeholder="Enter your email"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Enter your name"
               required
             />
           </FormControl>
@@ -22,8 +43,8 @@ const RegisterPage = () => {
             <FormLabel>Email</FormLabel>
             <Input
               type="email"
-              //value={email}
-              // onChange={e => setEmail(e.target.value)}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
             />
@@ -32,14 +53,14 @@ const RegisterPage = () => {
             <FormLabel>Password</FormLabel>
             <Input
               type="password"
-              //value={password}
-              //onChange={e => setPassword(e.target.value)}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
             />
           </FormControl>
-          {/* {error && <Text color="red.500">{error}</Text>}*/}
-          <Button type="submit" colorScheme="teal" mt={4}>
+          {error && <Text color="red.500">{error}</Text>}
+          <Button type="submit" colorScheme="teal" mt={4} isLoading={isLoading}>
             Register
           </Button>
         </form>

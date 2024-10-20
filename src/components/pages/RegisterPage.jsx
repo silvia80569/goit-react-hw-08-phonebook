@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/auth/authOperations';
 import { selectAuthError, selectIsLoading } from '../redux/auth/authSelectors';
+import UserMenu from 'components/usermenu/UserMenu';
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -23,6 +24,7 @@ const RegisterPage = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const userData = { name, email, password };
+    console.log('Submitting user data:', userData);
     dispatch(registerUser(userData));
   };
   return (
@@ -32,7 +34,7 @@ const RegisterPage = () => {
           <FormControl mb={3}>
             <FormLabel>Name</FormLabel>
             <Input
-              type="name"
+              type="text"
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="Enter your name"
@@ -65,6 +67,7 @@ const RegisterPage = () => {
           </Button>
         </form>
       </Box>
+      <UserMenu />
     </>
   );
 };

@@ -19,8 +19,9 @@ const LoginPage = () => {
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectIsLoading);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+
     const userData = { email, password };
     dispatch(loginUser(userData));
   };
@@ -41,9 +42,9 @@ const LoginPage = () => {
           <FormControl id="password" mb="4">
             <FormLabel>Password:</FormLabel>
             <Input
-              type={password}
+              type="password"
               placeholder="Enter your password"
-              value="password"
+              value={password}
               onChange={e => setPassword(e.target.value)}
               required
             />

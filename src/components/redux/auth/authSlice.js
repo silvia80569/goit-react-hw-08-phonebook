@@ -14,11 +14,26 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
+        state.isLoading = false;
+        state.error = null;
         setAuthToken(action.payload.token);
+      })
+
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -26,12 +41,22 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         setAuthToken(action.payload.token);
       })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
         setAuthToken(null);
       });
+
   },
 });
 

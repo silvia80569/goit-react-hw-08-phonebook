@@ -11,4 +11,9 @@ export const setAuthToken = (token) => {
     delete axiosInstance.defaults.headers.common['Authorization'];
   }
 }
+
+const token = localStorage.getItem('userToken');
+if (token) {
+  setAuthToken(token);
+}
 export default axiosInstance;

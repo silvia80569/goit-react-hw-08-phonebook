@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthError, selectIsLoading } from '../redux/auth/authSelectors';
 import { loginUser } from 'components/redux/auth/authOperations';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -19,11 +20,14 @@ const LoginPage = () => {
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectIsLoading);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async e => {
     e.preventDefault();
 
     const userData = { email, password };
     dispatch(loginUser(userData));
+    navigate('/contacts');
   };
   return (
     <div>

@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, loginUser, logoutUser } from "./authOperations";
-import { setAuthToken } from "../../api/axios";
+import { createSlice } from '@reduxjs/toolkit';
+import { registerUser, loginUser, logoutUser } from './authOperations';
+import { setAuthToken } from '../../api/axios';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -12,9 +12,9 @@ const authSlice = createSlice({
     error: null,
   },
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(registerUser.pending, (state) => {
+      .addCase(registerUser.pending, state => {
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
@@ -31,8 +31,7 @@ const authSlice = createSlice({
         state.error = action.error.message;
       })
 
-
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginUser.pending, state => {
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -46,17 +45,15 @@ const authSlice = createSlice({
         state.error = action.error.message;
       })
 
-
-      .addCase(logoutUser.pending, (state) => {
+      .addCase(logoutUser.pending, state => {
         state.isLoading = true;
       })
-      .addCase(logoutUser.fulfilled, (state) => {
+      .addCase(logoutUser.fulfilled, state => {
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
         setAuthToken(null);
       });
-
   },
 });
 

@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/auth/authOperations';
 import { selectAuthError, selectIsLoading } from '../redux/auth/authSelectors';
-import UserMenu from 'components/usermenu/UserMenu';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -21,11 +21,14 @@ const RegisterPage = () => {
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectIsLoading);
 
+  const navigate = useNavigate();
+
   const handleSubmit = e => {
     e.preventDefault();
     const userData = { name, email, password };
     console.log('Submitting user data:', userData);
     dispatch(registerUser(userData));
+    navigate('/login');
   };
   return (
     <>
@@ -67,7 +70,6 @@ const RegisterPage = () => {
           </Button>
         </form>
       </Box>
-      <UserMenu />
     </>
   );
 };

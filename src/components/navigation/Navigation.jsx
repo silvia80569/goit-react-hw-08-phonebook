@@ -7,6 +7,7 @@ import {
   Link as ChakraLink,
   Divider,
 } from '@chakra-ui/react';
+import UserMenu from '../usermenu/UserMenu';
 
 const Navigation = () => {
   return (
@@ -50,6 +51,7 @@ const Navigation = () => {
               Login
             </ChakraLink>
           </ListItem>
+          <UserMenu />
           <ListItem>
             <ChakraLink
               as={NavLink}

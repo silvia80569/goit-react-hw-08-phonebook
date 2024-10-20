@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   FormControl,
@@ -8,7 +8,11 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthError, selectIsLoading } from '../redux/auth/authSelectors';
+import {
+  selectAuthError,
+  selectIsAuthenticated,
+  selectIsLoading,
+} from '../redux/auth/authSelectors';
 import { loginUser } from 'components/redux/auth/authOperations';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,6 +23,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectAuthError);
   const isLoading = useSelector(selectIsLoading);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const navigate = useNavigate();
 
@@ -26,9 +31,13 @@ const LoginPage = () => {
     e.preventDefault();
 
     const userData = { email, password };
-    dispatch(loginUser(userData));
-    navigate('/contacts');
+    await dispatch(loginUser(userData));
   };
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/contacts');
+    }
+  }, [isAuthenticated, navigate]);
   return (
     <div>
       <Box maxWidth="400px" mx="auto" mt="20">

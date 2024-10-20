@@ -21,25 +21,33 @@ const contactsSlice = createSlice({
       })
       .addCase(fetchContacts.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.error.message || 'Failed to delete contact';
       })
 
 
       .addCase(addContact.pending, state => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items.push(action.payload);
+        const contactExists = state.items.some(
+          contact => contact.id === action.payload.id
+        );
+        if (!contactExists) {
+          state.items.push(action.payload);
+        }
       })
+
       .addCase(addContact.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.error = action.error.message || 'Failed to delete contact';
       })
 
 
       .addCase(deleteContact.pending, state => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -49,7 +57,7 @@ const contactsSlice = createSlice({
       })
       .addCase(deleteContact.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.error = action.error.message || 'Failed to delete contact';
       });
   },
 });

@@ -24,6 +24,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         setAuthToken(action.payload.token);
+        localStorage.setItem('userToken', action.payload.token);
       })
 
       .addCase(registerUser.rejected, (state, action) => {
@@ -38,7 +39,10 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
+        state.isLoading = false;
+        state.error = null;
         setAuthToken(action.payload.token);
+        localStorage.setItem('userToken', action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -52,7 +56,13 @@ const authSlice = createSlice({
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
+        state.isLoading = false;
         setAuthToken(null);
+        localStorage.removeItem('userToken');
+      })
+      .addCase(logoutUser.rejected, state => {
+        state.isLoading = false;
+        state.error = 'Logout faild';
       });
   },
 });

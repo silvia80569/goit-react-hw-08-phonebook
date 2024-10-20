@@ -20,8 +20,10 @@ const UserMenu = () => {
     <Box display="flex" alignItems="center">
       {isAuthenticated ? (
         <>
-          <Text mr={4}>Welcome {user.name}!</Text>
-          <Button onClick={handleLogout}>Logout</Button>
+          <Text mr={4}>Welcome {user?.name || 'User'}!</Text>
+          <Button onClick={handleLogout} aria-label="Logout">
+            Logout
+          </Button>
         </>
       ) : (
         <Text mr={4}>You are not logged in</Text>

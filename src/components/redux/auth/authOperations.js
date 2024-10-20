@@ -12,7 +12,7 @@ export const registerUser = createAsyncThunk('auth/register', async (userData, {
     return { user: response.data, token };
   } catch (error) {
     console.error('Error registering user:', error.response?.data || error.message);
-    return rejectWithValue(error.response.data || error.message);
+    return rejectWithValue(error.response?.data || "Error en el registro");
   }
 });
 
@@ -26,7 +26,7 @@ export const loginUser = createAsyncThunk('auth/login', async (userData, { rejec
     setAuthToken(token);
     return { user: response.data, token };
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error.response?.data || "Error en el inicio de sesión");
   }
 });
 
@@ -37,6 +37,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, { rejectWith
     setAuthToken(null);
     return;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error.response?.data || "Error en el cierre de sesión");
   }
 });
+

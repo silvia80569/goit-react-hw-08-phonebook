@@ -10,8 +10,8 @@ import store from './components/redux/store';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <ChakraProvider basename="/goit-react-hw-08-phonebook">
+      <BrowserRouter basename="/goit-react-hw-08-phonebook">
+        <ChakraProvider>
           <App />
         </ChakraProvider>
       </BrowserRouter>

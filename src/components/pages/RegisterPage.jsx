@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   FormControl,
@@ -28,8 +28,14 @@ const RegisterPage = () => {
     const userData = { name, email, password };
     console.log('Submitting user data:', userData);
     dispatch(registerUser(userData));
-    navigate('/login');
   };
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      navigate('/login');
+    }
+  }, [error, isLoading, navigate]);
+
   return (
     <>
       <Box maxW="md" mx="auto" mt={4} p={4} borderWidth={1} borderRadius="lg">
@@ -65,7 +71,13 @@ const RegisterPage = () => {
             />
           </FormControl>
           {error && <Text color="red.500">{error}</Text>}
-          <Button type="submit" colorScheme="teal" mt={4} isLoading={isLoading}>
+          <Button
+            type="submit"
+            colorScheme="teal"
+            mt={4}
+            isLoading={isLoading}
+            isDisabled={isLoading}
+          >
             Register
           </Button>
         </form>

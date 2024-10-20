@@ -16,4 +16,13 @@ const token = localStorage.getItem('userToken');
 if (token) {
   setAuthToken(token);
 }
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('Error en la solicitud:', error);
+    return Promise.reject(error);
+  }
+)
+
 export default axiosInstance;

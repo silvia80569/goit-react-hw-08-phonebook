@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Heading, Input, Button } from '@chakra-ui/react';
+import { Box, Heading, Input, Button, Text } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectContacts,
@@ -20,14 +20,19 @@ const ContactsPage = () => {
   const error = useSelector(selectError);
 
   const [newContact, setNewContact] = useState({ name: '', number: '' });
-
+  const [errorMessage, setErrorMessage] = useState('');
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
   const handleAddContact = () => {
+    if (!newContact.name || !newContact.number) {
+      setErrorMessage('Please enter both name and number.');
+      return;
+    }
     dispatch(addContact(newContact));
     setNewContact({ name: '', number: '' });
+    setErrorMessage('');
   };
 
   const handleDeleteContact = id => {
@@ -64,6 +69,7 @@ const ContactsPage = () => {
         <Button onClick={handleAddContact} colorScheme="blue">
           Add Contact
         </Button>
+        {errorMessage && <Text color="red.500">{errorMessage}</Text>}
       </Box>
       <ul>
         {contacts.map(contact => (
